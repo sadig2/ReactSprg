@@ -2,50 +2,59 @@ import React, { Component } from "react";
 import ProjectItem from "./project/ProjectItem";
 import Header from "./layout/Header";
 import CreateProjectButton from "./project/CreateProjectButton";
+import { connect } from "react-redux";
+import { getProjects } from "../actions/projectActions";
+import PropTypes from "prop-types";
 
 class Dashboard extends Component {
+  componentDidMount() {
+    this.props.getProjects();
+  }
+
   render() {
     return (
-      <div class="projects">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h1 class="display-4 text-center">Projects</h1>
+      <div className="projects">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="display-4 text-center">Projects</h1>
               <br />
               <CreateProjectButton />
               <br />
               <hr />
 
-              <div class="container">
-                <div class="card card-body bg-light mb-3">
-                  <div class="row">
-                    <div class="col-2">
-                      <span class="mx-auto">REACT</span>
+              <div className="container">
+                <div className="card card-body bg-light mb-3">
+                  <div className="row">
+                    <div className="col-2">
+                      <span className="mx-auto">REACT</span>
                     </div>
-                    <div class="col-lg-6 col-md-4 col-8">
+                    <div className="col-lg-6 col-md-4 col-8">
                       <h3>Spring / React Project</h3>
                       <p>
                         Project to create a Kanban Board with Spring Boot and
                         React
                       </p>
                     </div>
-                    <div class="col-md-4 d-none d-lg-block">
-                      <ul class="list-group">
+                    <div className="col-md-4 d-none d-lg-block">
+                      <ul className="list-group">
                         <a href="#">
-                          <li class="list-group-item board">
-                            <i class="fa fa-flag-checkered pr-1">
+                          <li className="list-group-item board">
+                            <i className="fa fa-flag-checkered pr-1">
                               Project Board{" "}
                             </i>
                           </li>
                         </a>
                         <a href="#">
-                          <li class="list-group-item update">
-                            <i class="fa fa-edit pr-1">Update Project Info</i>
+                          <li className="list-group-item update">
+                            <i className="fa fa-edit pr-1">
+                              Update Project Info
+                            </i>
                           </li>
                         </a>
                         <a href="">
-                          <li class="list-group-item delete">
-                            <i class="fa fa-minus-circle pr-1">
+                          <li className="list-group-item delete">
+                            <i className="fa fa-minus-circle pr-1">
                               Delete Project
                             </i>
                           </li>
@@ -63,4 +72,13 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+Dashboard.propTypes = {
+  project: PropTypes.object.isRequired,
+  getProjects: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  project: state.project
+});
+
+export default connect(mapStateToProps, { getProjects })(Dashboard);
